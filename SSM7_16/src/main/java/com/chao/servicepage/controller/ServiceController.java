@@ -3,6 +3,7 @@ package com.chao.servicepage.controller;
 import com.chao.account.bean.Account;
 import com.chao.servicepage.bean.ServiceBean;
 import com.chao.servicepage.bean.ServicePage;
+import com.chao.servicepage.service.MyService;
 import com.chao.servicepage.service.impl.MyServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/service")
 public class ServiceController {
     @Resource(name = "myServiceImpl")
-    private MyServiceImpl myService;
+    private MyService myService;
 
 
     @RequestMapping("serviceList.do")

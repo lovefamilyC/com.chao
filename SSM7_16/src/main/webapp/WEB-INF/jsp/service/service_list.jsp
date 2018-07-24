@@ -48,7 +48,7 @@
 <div id="navi">
     <ul id="menu">
         <li><a href="<%=request.getContextPath()%>/login/login.do" class="index_off"></a></li>
-        <li><a href="<%=request.getContextPath()%>/role/role_list.html" class="role_off"></a></li>
+        <li><a href="<%=request.getContextPath()%>/role/roleList.do" class="fee_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/admin/admin_list.html" class="admin_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/fee/feeList.do" class="fee_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/account/accountList.do" class="account_off"></a></li>
@@ -163,7 +163,7 @@
             <c:forEach items="${servicePage.stringList}" var="i">
                 <c:choose>
                     <c:when test="${servicePage.currentPage==i}">
-                        <a href="#" onclick="pageAccount2(${i})">${i}</a>
+                        <a href="#" class="current_page" onclick="pageAccount2(${i})">${i}</a>
                     </c:when>
                     <c:otherwise>
                         <a href="#" onclick="pageAccount2(${i})">${i}</a>
@@ -196,7 +196,6 @@
 
 
     function pageAccount2(e){
-        console.log(e)
         $("#page1").attr("value", e);
         $("form").submit();
 

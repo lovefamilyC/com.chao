@@ -2,6 +2,7 @@ package com.chao.account.bean;
 
 import com.chao.abstract_bean.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 /* I AM A PURE SHEEP
@@ -10,7 +11,7 @@ import java.util.List;
  *                 
  * FUCK AS YOU WISH                                           
  */
-public class AccountPage extends Page {
+public class AccountPage extends Page implements Serializable{
     private String idcard_no,login_name,real_name,status;
     @Override
     public String toString() {

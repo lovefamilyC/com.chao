@@ -1,8 +1,10 @@
 package com.chao.account.bean;
 
+import java.io.Serializable;
+
 /***
  */
-public class Account {
+public class Account implements Serializable{
     private String account_id,recommender_id,login_name,login_passwd,status,create_date,
                    pause_date,close_date,real_name,idcard_no,birthdate,gender,occupation,
                    telephone,email,mailaddress,zipcode,qq,last_login_time,last_login_ip;

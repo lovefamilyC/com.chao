@@ -1,6 +1,7 @@
 package com.chao.fee.controller;
 
 import com.chao.fee.bean.Cost;
+import com.chao.fee.service.FeeService;
 import com.chao.fee.service.impl.FeeServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/fee")
 public class FeeController {
     @Resource(name = "feeImpl")
-    private FeeServiceImpl feeService;
+    private FeeService feeService;
 
     @RequestMapping("/feeList.do")
     public String fee1(Model model) {

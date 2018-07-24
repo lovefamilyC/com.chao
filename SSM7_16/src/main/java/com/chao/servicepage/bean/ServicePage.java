@@ -2,6 +2,7 @@ package com.chao.servicepage.bean;
 
 import com.chao.abstract_bean.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 /* I AM A PURE SHEEP
@@ -10,7 +11,7 @@ import java.util.List;
  *                 
  * FUCK AS YOU WISH                                           
  */
-public class ServicePage extends Page {
+public class ServicePage extends Page implements Serializable{
     private  String os_username,unix_host,idcard_no,status;
 
     @Override

@@ -2,7 +2,7 @@ package com.chao.account.controller;
 
 import com.chao.account.bean.Account;
 import com.chao.account.bean.AccountPage;
-import com.chao.account.service.impl.AccountServiceImpl;
+import com.chao.account.service.AccountService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +22,8 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountController {
     @Resource(name = "accountImpl")
-    private AccountServiceImpl accountService;
+    private AccountService accountService;
+
 
 
     //查询列表
@@ -87,7 +88,7 @@ public class AccountController {
             model.addAttribute("msg", msg);
             account1(model);
             return null;
-
         }
     }
+
 }

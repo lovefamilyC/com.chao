@@ -11,8 +11,9 @@ import com.chao.account.bean.Account;
 import com.chao.fee.bean.Cost;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 
-public class ServiceBean {
+public class ServiceBean implements Serializable{
 
     private String id,account_id,unix_host,
             os_username,login_passwd,status,

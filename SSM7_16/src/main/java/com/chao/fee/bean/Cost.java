@@ -1,12 +1,14 @@
 package com.chao.fee.bean;
 
+import java.io.Serializable;
+
 /* I AM A PURE SHEEP
  *                   
  * WHAT YOU WANT TO DO                 
  *                 
  * FUCK AS YOU WISH                                           
  */
-public class Cost {
+public class Cost implements Serializable{
     private String cost_id,base_duration,base_cost,unit_cost;
     private String name,status,descr,creatime,startime,cost_type;
 

@@ -1,5 +1,6 @@
 package com.chao.abstract_bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /* I AM A PURE SHEEP
@@ -8,9 +9,9 @@ import java.util.List;
  *                 
  * FUCK AS YOU WISH                                           
  */
-public class Page<T> {
+public class Page<T> implements Serializable{
     private int allCount; //总数量
-    private int onePageNum; //一页的数量
+    private int onePageNum = 5; //一页的数量
     private int currentPage; //当前页码
     private int allPage; //总页数
     private int beginNum; //起始位置

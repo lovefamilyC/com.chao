@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chao.role.dao.RoleMapper">
+    <!--查询角色-->
+    <select id="queryRole" resultMap="role" parameterType="com.chao.role.bean.RolePage">
+        SELECT * FROM role_info  ORDER BY role_id limit #{beginNum},#{onePageNum}
+    </select>
+    <resultMap id="role" type="com.chao.role.bean.Role">
+        <id column="role_id" property="role_id"></id>
+        <result column="name" property="name"></result>
+    </resultMap>
+    <!--得到角色总数量-->
+    <select id="getAllCount" resultType="int">
+        SELECT COUNT(*) FROM role_info;
+    </select>
+    <!--查询权限-->
+    <select id="queryModule" parameterType="com.chao.role.bean.Role" resultType="com.chao.role.bean.Module">
+        SELECT * FROM
+        module_info LEFT JOIN role_module ON module_info.module_id = role_module.module_id
+        LEFT JOIN role_info ON role_module.role_id = role_info.role_id
+        WHERE role_info.role_id = #{role_id}
+    </select>
+
+    <select id="findAllModule" resultType="com.chao.role.bean.Module">
+        SELECT * FROM module_info;
+    </select>
+
+    <!--插入role表-->
+    <insert id="insertRole" parameterType="String">
+        INSERT INTO role_info (role_id,name) VALUES (NULL ,#{name})
+    </insert>
+    <!--插入role_module表-->
+    <insert id="insertRoleAndModule">
+        INSERT INTO role_module (role_id,module_id) VALUES (#{role_id},#{module_id});
+    </insert>
+    <select id="queryRoleId" parameterType="String" resultType="com.chao.role.bean.Role">
+        SELECT * FROM role_info WHERE name = #{name}
+    </select>
+    <select id="queryModuleId" parameterType="String" resultType="com.chao.role.bean.Module">
+        SELECT * FROM module_info WHERE name = #{name};
+    </select>
+
+    <select id="queryRoleName" parameterType="String" resultType="com.chao.role.bean.Role">
+        SELECT * FROM role_info WHERE role_id = #{role_id}
+    </select>
+
+    <!--修改-->
+    <update id="updateRoleName" parameterType="com.chao.role.bean.Role">
+        UPDATE role_info SET name = #{name} WHERE role_info = #{role_id}
+    </update>
+    <delete id="deleteRoleAndModule">
+        DELETE FROM role_module WHERE role_id = #{role_id} AND module_id = #{module_id}
+    </delete>
+
+</mapper>

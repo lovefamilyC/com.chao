@@ -1,12 +1,14 @@
 package com.chao.servicepage.bean;
 
+import java.io.Serializable;
+
 /* I AM A PURE SHEEP
  *                   
  * WHAT YOU WANT TO DO                 
  *                 
  * FUCK AS YOU WISH                                           
  */
-public class HostBean {
+public class HostBean implements Serializable{
     private String id,name,location;
 
     @Override

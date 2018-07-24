@@ -41,7 +41,7 @@
 <div id="navi">
     <ul id="menu">
         <li><a href="<%=request.getContextPath()%>/login/login.do" class="index_off"></a></li>
-        <li><a href="../role/role_list.html" class="role_off"></a></li>
+        <li><a href="../role/role_list.jsp" class="role_off"></a></li>
         <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/fee/feeList.do" class="fee_off"></a></li>
         <li><a href="<%=request.getContextPath()%>/account/accountList.do" class="account_on"></a></li>
