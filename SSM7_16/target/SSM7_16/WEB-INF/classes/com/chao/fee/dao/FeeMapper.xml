@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chao.fee.dao.FeeMapper">
+    <select id="queryAllCost" resultType="com.chao.fee.bean.Cost">
+        SELECT * FROM cost WHERE status='开通' OR status = '暂停' order BY cost_id;
+    </select>
+
+    <select id="queryById" parameterType="String" resultType="com.chao.fee.bean.Cost">
+        SELECT * FROM cost WHERE cost_id = #{cost_id}
+    </select>
+
+    <insert id="insertCost" parameterType="com.chao.fee.bean.Cost">
+        INSERT INTO cost
+        VALUES (NULL ,#{name},#{base_duration},#{base_cost},
+        #{unit_cost},#{status},#{descr},#{creatime},#{startime},#{cost_type});
+    </insert>
+
+    <select id="queryByName" parameterType="String" resultType="com.chao.fee.bean.Cost">
+        SELECT * FROM cost WHERE name = #{name}
+    </select>
+
+    <update id="updateCostStatus">
+        UPDATE cost SET status = #{status},startime = #{time} WHERE cost_id = #{cost_id}
+    </update>
+
+    <update id="deleteCost" >
+        UPDATE cost
+        SET status = #{status}
+        WHERE cost_id = #{cost_id};
+    </update>
+
+    <update id="modiCost" parameterType="com.chao.fee.bean.Cost">
+        UPDATE cost
+        SET name = #{name},base_duration = #{base_duration},
+        base_cost = #{base_cost},unit_cost = #{unit_cost},
+        descr = #{descr},cost_type = #{cost_type}
+        WHERE cost_id = #{cost_id};
+    </update>
+
+</mapper>

@@ -68,8 +68,7 @@ public class RoleController {
     @ResponseBody
     public String role5(@RequestBody Map<String, Object> map) {
         System.out.println("开始位置");
-        boolean flag = roleServiceImpl.hardRoleModi(map);
-        return null;
+        return roleServiceImpl.hardRoleModi(map);
     }
 
 }

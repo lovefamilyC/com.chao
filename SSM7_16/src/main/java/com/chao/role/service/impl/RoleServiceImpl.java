@@ -65,54 +65,37 @@ public class RoleServiceImpl implements RoleService {
     public String roleAdd(Map map) {
         String msg = "";
         String rolrName = (String) map.get("role_name");
+        if (map.size() < 2 || rolrName.isEmpty()) {
+            return "请按要求写!";
+        }
+        boolean flag = false;
         if (map.get("module_id") instanceof String) {
-            String id = (String) map.get("module_id");
-            if (map.size() < 2 || rolrName.isEmpty() || id == null) {
-                msg = "请按要求写!";
-            } else {
-                Role role1 = roleMapper.queryRoleId(rolrName);
-                if (role1 != null) {
-                    msg = "用户名已存在!";
-                    System.out.println("b" + msg);
+            flag = true;
+        }
+        Role role1 = roleMapper.queryRoleId(rolrName);
+        if (role1 != null) {
+            msg = "用户名已存在!";
+        } else {
+            int num1 = roleMapper.insertRole(rolrName);
+            if (num1 > 0) {
+                Role role = roleMapper.queryRoleId(rolrName);
+                int num2 = 0;
+                if (flag) {
+                    String id = (String) map.get("module_id");
+                    num2 = roleMapper.insertRoleAndModule(role.getRole_id(), id);
                 } else {
-                    int num1 = roleMapper.insertRole(rolrName);
-                    if (num1 > 0) {
-                        msg = "添加成功!";
-                        Role role = roleMapper.queryRoleId(rolrName);
-                        int num2 = roleMapper.insertRoleAndModule(role.getRole_id(), id);
-                        if (num2 < 1) {
-                            msg = "添加失败!";
-                        }
-
+                    List<String> moduleId = (List<String>) map.get("module_id");
+                    for (String s : moduleId) {
+                        num2 = roleMapper.insertRoleAndModule(role.getRole_id(), s);
                     }
                 }
-            }
-
-        } else {
-            List<String> moduleId = (List<String>) map.get("module_id");
-            if (map.size() < 2 || rolrName.isEmpty() || moduleId.size() > 0) {
-                msg = "请按要求写!";
-            } else {
-                Role role1 = roleMapper.queryRoleId(rolrName);
-                if (role1 != null) {
-                    msg = "用户名已存在!";
-                    System.out.println("b" + msg);
+                if (num2 > 0) {
+                    msg = "添加成功!";
                 } else {
-                    int num1 = roleMapper.insertRole(rolrName);
-                    if (num1 > 0) {
-                        msg = "添加成功!";
-                        Role role = roleMapper.queryRoleId(rolrName);
-                        for (String s : moduleId) {
-                            int num2 = roleMapper.insertRoleAndModule(role.getRole_id(), s);
-                            if (num2 < 1) {
-                                msg = "添加失败!";
-                            }
-                        }
-                    }
+                    msg = "添加失败!";
                 }
             }
         }
-
         return msg;
     }
 
@@ -122,12 +105,8 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleMapper.queryRoleName(role_id);
         List<Module> moduleList = roleMapper.queryModule(role);
         List<Module> allModul = roleMapper.findAllModule();
-        for (int i = 0; i < allModul.size(); i++) {
-            for (Module module : moduleList) {
-                if (module.getName().equals(allModul.get(i).getName())) {
-                    allModul.remove(i);
-                }
-            }
+        for (Module module : moduleList) {
+               allModul.remove(module);
         }
         role.setModuleList(moduleList);
         map.put("role", role);
@@ -140,35 +119,73 @@ public class RoleServiceImpl implements RoleService {
     public String hardRoleModi(Map map) {
         String roleName = (String) map.get("roleName");
         String role_id = (String) map.get("role_id");
-        if ("".equals(roleName)||roleName==null){
-            return "名称不能为空";
+        if (map.size() < 3 || "".equals(roleName) || roleName == null) {
+            return "名称不能为空且必须勾选一个权限";
         }
-        if (map.get("moduleName")instanceof String){
-            String moduleName = (String) map.get("moduleName");
-            if (moduleName ==null){
-                return "必须勾选一个权限";
-            }
-            Role role = roleMapper.queryRoleId(roleName);
-            if (role ==null || role_id.equals(role.getRole_id())){
-                role.setRole_id(role_id);
-                role.setName(roleName);
-                int num = roleMapper.updateRoleName(role);
-                List<Module> moduleList = roleMapper.queryModule(role);
+        boolean flag = false;
+        if (map.get("moduleName") instanceof String) {
+            flag = true;
+        }
+        Role role = roleMapper.queryRoleId(roleName);
+        if (role == null || role_id.equals(role.getRole_id())) {
+            role.setRole_id(role_id);
+            role.setName(roleName);
+            int num = roleMapper.updateRoleName(role);
+            List<Module> moduleList = roleMapper.queryModule(role);
+            if (flag) {
+                String moduleName = (String) map.get("moduleName");
+                //把重复分剔除
                 for (int i = 0; i < moduleList.size(); i++) {
-                    if (moduleName.equals(moduleList.get(i).getName())){
-                        continue;
+                    if (moduleName.equals(moduleList.get(i).getName())) {
+                        moduleList.remove(moduleList.get(i));
+                        moduleName = null;
                     }
-                        int num2 = roleMapper.deleteRoleAndModule(role_id,moduleList.get(i).getModule_id());
                 }
-                //没写完!!!!!!
-
-            }else {
-                return "名称已存在";
+                //剩余删除
+                if (moduleList.size() > 0) {
+                    for (Module module : moduleList) {
+                        int num2 = roleMapper.deleteRoleAndModule(role_id, module.getModule_id());
+                    }
+                }
+                //剩余的添加
+                if (moduleName != null) {
+                    Module module = roleMapper.queryModuleId(moduleName);
+                    roleMapper.insertRoleAndModule(role_id, module.getModule_id());
+                }
+            } else {
+                List<String> moduleNames = (List<String>) map.get("moduleName");
+                //把重复分剔除
+                for (int i = 0; i < moduleList.size(); i++) {
+                    for (int e = 0; e < moduleNames.size(); e++) {
+                        if (moduleNames.get(e).equals(moduleList.get(i).getName())) {
+                            moduleList.remove(i);
+                            moduleNames.remove(e);
+                            System.out.println(moduleList.size());
+                        }
+                    }
+                }
+                //剩余删除
+                if (moduleList.size() > 0) {
+                    for (Module module : moduleList) {
+                        int num2 = roleMapper.deleteRoleAndModule(role_id, module.getModule_id());
+                    }
+                }
+                //剩余的添加
+                if (moduleNames.size() > 0) {
+                    for (String moduleName : moduleNames) {
+                        Module module = roleMapper.queryModuleId(moduleName);
+                        roleMapper.insertRoleAndModule(role_id, module.getModule_id());
+                    }
+                }
+                return "成功!";
             }
 
-
+        } else {
+            return "名称已存在";
         }
 
         return null;
     }
+
 }
+
