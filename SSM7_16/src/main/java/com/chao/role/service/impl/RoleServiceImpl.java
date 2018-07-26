@@ -126,8 +126,9 @@ public class RoleServiceImpl implements RoleService {
         if (map.get("moduleName") instanceof String) {
             flag = true;
         }
-        Role role = roleMapper.queryRoleId(roleName);
-        if (role == null || role_id.equals(role.getRole_id())) {
+        Role role1 = roleMapper.queryRoleId(roleName);
+        if (role1 == null || role_id.equals(role1.getRole_id())) {
+            Role role = new Role();
             role.setRole_id(role_id);
             role.setName(roleName);
             int num = roleMapper.updateRoleName(role);
@@ -155,8 +156,8 @@ public class RoleServiceImpl implements RoleService {
             } else {
                 List<String> moduleNames = (List<String>) map.get("moduleName");
                 //把重复分剔除
-                for (int i = 0; i < moduleList.size(); i++) {
-                    for (int e = 0; e < moduleNames.size(); e++) {
+                for (int i = moduleList.size()-1; i < 0; i--) {
+                    for (int e =moduleNames.size()-1; e <0 ; e--) {
                         if (moduleNames.get(e).equals(moduleList.get(i).getName())) {
                             moduleList.remove(i);
                             moduleNames.remove(e);
