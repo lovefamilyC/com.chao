@@ -52,7 +52,6 @@ public class RoleServiceImpl implements RoleService {
         }
         //设置集合
         rolePage.setList(roleList);
-
         return rolePage;
     }
 
@@ -100,13 +99,21 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Map roleModi(String role_id) {
         Map<String, Object> map = new HashMap<>();
         Role role = roleMapper.queryRoleName(role_id);
         List<Module> moduleList = roleMapper.queryModule(role);
         List<Module> allModul = roleMapper.findAllModule();
-        for (Module module : moduleList) {
-               allModul.remove(module);
+        for (int i = allModul.size() - 1; i > -1; i--) {
+            if (allModul.size()<1)continue;
+            boolean flag = false;
+            for (int e = moduleList.size() - 1; e > -1; e--) {
+                if (allModul.get(i).getName().equals(moduleList.get(e).getName())){
+                    flag = true;
+                }
+            }
+            if (flag) allModul.remove(i);
         }
         role.setModuleList(moduleList);
         map.put("role", role);
@@ -116,6 +123,7 @@ public class RoleServiceImpl implements RoleService {
 
     //修改
     @Override
+    @SuppressWarnings("unchecked")
     public String hardRoleModi(Map map) {
         String roleName = (String) map.get("roleName");
         String role_id = (String) map.get("role_id");
@@ -137,7 +145,7 @@ public class RoleServiceImpl implements RoleService {
                 String moduleName = (String) map.get("moduleName");
                 //把重复分剔除
                 for (int i = 0; i < moduleList.size(); i++) {
-                    if (moduleName.equals(moduleList.get(i).getName())) {
+                    if (moduleName != null && moduleName.equals(moduleList.get(i).getName())) {
                         moduleList.remove(moduleList.get(i));
                         moduleName = null;
                     }
@@ -156,14 +164,16 @@ public class RoleServiceImpl implements RoleService {
             } else {
                 List<String> moduleNames = (List<String>) map.get("moduleName");
                 //把重复分剔除
-                for (int i = moduleList.size()-1; i < 0; i--) {
-                    for (int e =moduleNames.size()-1; e <0 ; e--) {
+                for (int i = moduleList.size() - 1; i > -1; i--) {
+                    if (moduleList.size()<1)continue;
+                    boolean flag1 = false;
+                    for (int e = moduleNames.size() - 1; e > -1; e--) {
                         if (moduleNames.get(e).equals(moduleList.get(i).getName())) {
-                            moduleList.remove(i);
+                            flag1 = true;
                             moduleNames.remove(e);
-                            System.out.println(moduleList.size());
                         }
                     }
+                    if (flag1)moduleList.remove(i);
                 }
                 //剩余删除
                 if (moduleList.size() > 0) {

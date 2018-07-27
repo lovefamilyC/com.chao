@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chao.admin.dao.AdminMapper">
+    <sql id="page">
+        <trim prefix="where" prefixOverrides="and">
+            <if test="moduleName !=null and moduleName !=''and moduleName !='全部'">
+                AND module_info.name = #{moduleName}
+            </if>
+            <if test="adminName !=null and adminName !=''">
+                AND role_info.name = #{adminName}
+            </if>
+        </trim>
+    </sql>
+    <!--查询第一页admin-->
+    <select id="findAdminByPage" parameterType="com.chao.admin.bean.AdminPage"
+            resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info ORDER BY admin_id limit #{beginNum},#{onePageNum}
+    </select>
+    <!--查询每个admin拥有的role-->
+    <select id="findAdminRole" parameterType="com.chao.admin.bean.AdminBean"
+            resultType="com.chao.role.bean.Role">
+        SELECT * FROM
+        role_info LEFT JOIN admin_role ON role_info.role_id = admin_role.role_id
+        LEFT JOIN admin_info ON admin_info.admin_id = admin_role.admin_id
+        WHERE admin_role.admin_id = #{admin_id}
+    </select>
+    <!--查询所有权限-->
+    <select id="findAllModule" resultType="com.chao.role.bean.Module">
+        SELECT * FROM module_info;
+    </select>
+    <!--得到总数量-->
+    <select id="getAdminCount" resultType="int">
+        SELECT COUNT(*) FROM admin_info;
+    </select>
+    <!--条件查询-->
+    <select id="findAdminByRoleAndMoudl" parameterType="com.chao.admin.bean.AdminPage"
+            resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info WHERE admin_info.name IN
+        (SELECT admin_info.name FROM
+        admin_info LEFT JOIN admin_role ON admin_info.admin_id = admin_role.admin_id
+        LEFT JOIN role_info ON admin_role.role_id = role_info.role_id
+        LEFT JOIN role_module ON role_info.role_id = role_module.role_id
+        LEFT JOIN module_info ON role_module.module_id = module_info.module_id
+        <include refid="page"></include>
+        )
+        ORDER BY admin_info.admin_id
+        limit #{beginNum},#{onePageNum}
+    </select>
+    <!--得到条件数量-->
+    <select id="getCountByCondition" parameterType="com.chao.admin.bean.AdminPage"
+            resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info WHERE admin_info.name IN
+        (SELECT admin_info.name FROM
+        admin_info LEFT JOIN admin_role ON admin_info.admin_id = admin_role.admin_id
+        LEFT JOIN role_info ON admin_role.role_id = role_info.role_id
+        LEFT JOIN role_module ON role_info.role_id = role_module.role_id
+        LEFT JOIN module_info ON role_module.module_id = module_info.module_id
+        <include refid="page"></include>
+        )
+        ORDER BY admin_info.admin_id
+    </select>
+</mapper>

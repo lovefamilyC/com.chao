@@ -67,7 +67,6 @@ public class RoleController {
     @RequestMapping("/roleModi.do")
     @ResponseBody
     public String role5(@RequestBody Map<String, Object> map) {
-        System.out.println("开始位置");
         return roleServiceImpl.hardRoleModi(map);
     }
 

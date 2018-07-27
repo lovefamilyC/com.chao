@@ -20,7 +20,7 @@
         SELECT * FROM
         module_info LEFT JOIN role_module ON module_info.module_id = role_module.module_id
         LEFT JOIN role_info ON role_module.role_id = role_info.role_id
-        WHERE role_info.role_id = #{role_id}
+        WHERE role_info.role_id = #{role_id} ORDER BY module_info.module_id;
     </select>
 
     <select id="findAllModule" resultType="com.chao.role.bean.Module">

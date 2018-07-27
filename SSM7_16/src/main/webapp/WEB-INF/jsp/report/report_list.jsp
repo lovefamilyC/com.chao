@@ -34,7 +34,7 @@
             <ul id="menu">
                 <li><a href="../index.html" class="index_off"></a></li>
                 <li><a href="../role/role_list.jsp" class="role_off"></a></li>
-                <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
+                <li><a href="../admin/admin_list.jsp" class="admin_off"></a></li>
                 <li><a href="../fee/fee_list.html" class="fee_off"></a></li>
                 <li><a href="../account/account_list.html" class="account_off"></a></li>
                 <li><a href="../service/service_list.jsp" class="service_off"></a></li>

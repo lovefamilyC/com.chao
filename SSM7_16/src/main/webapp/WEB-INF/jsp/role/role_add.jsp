@@ -36,7 +36,7 @@
             <ul id="menu">
                 <li><a href="<%=request.getContextPath()%>/login/login.do" class="index_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/role/roleList.do" class="fee_on"></a></li>
-                <li><a href="../admin/admin_list.html" class="admin_off"></a></li>
+                <li><a href="../admin/admin_list.jsp" class="admin_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/fee/feeList.do" class="fee_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/account/accountList.do" class="account_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/service/serviceList.do" class="service_off"></a></li>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="button_info clearfix">
                     <input type="button" value="保存" class="btn_save" id="btn" />
-                    <input type="button" value="取消" class="btn_save" />
+                    <input type="button" value="取消" class="btn_save" onclick="window.history.go(-1)"/>
                 </div>
             </form>
         </div>
