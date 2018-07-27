@@ -106,7 +106,7 @@ public class RoleServiceImpl implements RoleService {
         List<Module> moduleList = roleMapper.queryModule(role);
         List<Module> allModul = roleMapper.findAllModule();
         for (int i = allModul.size() - 1; i > -1; i--) {
-            if (allModul.size()<1)continue;
+            if (allModul.size()<1)break;
             boolean flag = false;
             for (int e = moduleList.size() - 1; e > -1; e--) {
                 if (allModul.get(i).getName().equals(moduleList.get(e).getName())){

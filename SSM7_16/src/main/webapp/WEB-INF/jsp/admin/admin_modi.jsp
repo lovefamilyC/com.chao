@@ -53,21 +53,23 @@
             <form action="" method="" class="main_form">
                     <div class="text_info clearfix"><span>姓名：</span></div>
                     <div class="input_info">
-                        <input type="text" value="张三" />
+                        <input type="text" name="name" value="${map.get('adminBean').name}" />
+                        <input type="hidden" name="admin_id" value="${map.get('adminBean').admin_id}" />
                         <span class="required">*</span>
                         <div class="validate_msg_long error_msg">20长度以内的汉字、字母、数字的组合</div>
                     </div>
                     <div class="text_info clearfix"><span>管理员账号：</span></div>
-                    <div class="input_info"><input type="text" readonly="readonly" class="readonly" value="admin1"  /></div>
+                    <div class="input_info"><input type="text" readonly="readonly" class="readonly" name="admin_code" value="${map.get('adminBean').admin_code}"  /></div>
                     <div class="text_info clearfix"><span>电话：</span></div>
                     <div class="input_info">
-                        <input type="text" value="13111111111"  />
+                        <input type="text" name="telephone" value="${map.get('adminBean').telephone}"  />
+                        <input type="hidden" name="password" value="${map.get('adminBean').password}"  />
                         <span class="required">*</span>
                         <div class="validate_msg_long error_msg">正确的电话号码格式：手机或固话</div>
                     </div>
                     <div class="text_info clearfix"><span>Email：</span></div>
                     <div class="input_info">
-                        <input type="text" class="width200" value="aa@aa.com"/>
+                        <input type="text" class="width200" name="email" value="${map.get('adminBean').email}"/>
                         <span class="required">*</span>
                         <div class="validate_msg_medium error_msg">50长度以内，正确的 email 格式</div>
                     </div>
@@ -75,20 +77,19 @@
                     <div class="input_info_high">
                         <div class="input_info_scroll">
                             <ul>
-                                <li><input type="checkbox" />超级管理员</li>
-                                <li><input type="checkbox" />账务账号管理员</li>
-                                <li><input type="checkbox" />业务账号管理员</li>
-                                <li><input type="checkbox" />账务账号管理员</li>
-                                <li><input type="checkbox" />业务账号管理员</li>
-                                <li><input type="checkbox" />账务账号管理员</li>
-                                <li><input type="checkbox" />业务账号管理员</li>
+                                <c:forEach items="${map.get('adminBean').roleList}" var="role">
+                                    <li><input type="checkbox" name="roleidList" value="${role.role_id}" checked/>${role.name}</li>
+                                </c:forEach>
+                                <c:forEach items="${map.get('allRoleList')}" var="allrole">
+                                    <li><input type="checkbox" name="roleidList" value="${allrole.role_id}"/>${allrole.name}</li>
+                                </c:forEach>
                             </ul>
                         </div>
                         <span class="required">*</span>
                         <div class="validate_msg_tiny error_msg">至少选择一个</div>
                     </div>
                     <div class="button_info clearfix">
-                        <input type="button" value="保存" class="btn_save" onclick="showResult();" />
+                        <input type="button" value="保存" class="btn_save" id="adminModi"  />
                         <input type="button" value="取消" class="btn_save" />
                     </div>
                 </form>  
@@ -99,5 +100,37 @@
             <br />
             <span>版权所有(C)云科技有限公司 </span>
         </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#adminModi").click(function () {
+                var checkID = [];
+                $("input[name='roleidList']:checked").each(function(i){//把所有被选中的复选框的值存入数组
+                    checkID[i] =$(this).val();
+                });
+                var d = $("form").serialize();
+                console.log(d)
+                $.ajax({
+                    type:"post",
+                    url:"adminModiOne.do",
+                    dataType:"text",
+                    data:d,
+                    traditional:true,
+                    success:function (data) {
+                        $("#save_result_info").html(data);
+                        showResult();
+                    },
+                    error: function () {
+                        alert("抱歉,网络异常!")
+                    }
+
+                })
+
+            })
+        })
+
+
+
+    </script>
+
     </body>
 </html>

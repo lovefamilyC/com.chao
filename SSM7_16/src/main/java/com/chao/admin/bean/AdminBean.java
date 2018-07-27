@@ -14,6 +14,16 @@ import java.util.List;
 public class AdminBean {
     private String admin_id,admin_code,password,name,telephone,email,enrolldate;
     private List<Role> roleList;
+    private String rePassword;
+    private List<String> roleidList;
+
+    public List<String> getRoleidList() {
+        return roleidList;
+    }
+
+    public void setRoleidList(List<String> roleidList) {
+        this.roleidList = roleidList;
+    }
 
     @Override
     public String toString() {
@@ -26,7 +36,17 @@ public class AdminBean {
                 ", email='" + email + '\'' +
                 ", enrolldate='" + enrolldate + '\'' +
                 ", roleList=" + roleList +
+                ", rePassword='" + rePassword + '\'' +
+                ", roleidList=" + roleidList +
                 '}';
+    }
+
+    public String getRePassword() {
+        return rePassword;
+    }
+
+    public void setRePassword(String rePassword) {
+        this.rePassword = rePassword;
     }
 
     public List<Role> getRoleList() {

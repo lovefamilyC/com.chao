@@ -61,4 +61,44 @@
         )
         ORDER BY admin_info.admin_id
     </select>
+
+    <!--查询所有角色-->
+    <select id="findAllRole" resultType="com.chao.role.bean.Role">
+        SELECT * FROM role_info;
+    </select>
+
+    <!--增加admin-->
+   <insert id="addAdmin" parameterType="com.chao.admin.bean.AdminBean">
+       INSERT INTO admin_info (admin_id ,admin_code,password,name,telephone,email,enrolldate)
+       VALUES (NULL ,#{admin_code},#{password},#{name},#{telephone},#{email},#{enrolldate});
+   </insert>
+    <!--插入admin_role-->
+    <insert id="addAdminAndRole">
+        INSERT INTO admin_role (admin_id,role_id) VALUES (#{admin_id},#{role_id})
+    </insert>
+    <!--通过code查询admin-->
+    <select id="findAdminByCode" parameterType="String" resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info WHERE admin_code = #{code};
+    </select>
+    <!--查询所有admin-->
+    <select id="findAllAdmin" resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info;
+    </select>
+    <!--修改admin-->
+    <update id="modiAdmin" parameterType="com.chao.admin.bean.AdminBean">
+        UPDATE admin_info
+        SET admin_code= #{admin_code},password=#{password},name=#{name},
+            telephone=#{telephone},email=#{email}
+        WHERE admin_id = #{admin_id}
+    </update>
+    <!--删除admin_role-->
+    <delete id="deleteAdminAndRole">
+        DELETE FROM admin_role
+        WHERE admin_id = #{admin_id}
+        AND role_id = #{role_id}
+    </delete>
+    <!--根据adminCode查询admin-->
+    <select id="findAdminByAdminId" parameterType="String" resultType="com.chao.admin.bean.AdminBean">
+        SELECT * FROM admin_info WHERE admin_code = #{admin_code};
+    </select>
 </mapper>

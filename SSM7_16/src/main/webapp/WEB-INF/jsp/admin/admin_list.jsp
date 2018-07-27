@@ -59,7 +59,7 @@
                     <div><input type="button" value="搜索" class="btn_search" onclick="searchPage(1)"/></div>
                     <input type="hidden" name="currentPage" value="" id="currentPage"/>
                     <input type="button" value="密码重置" class="btn_add" onclick="resetPwd();" />
-                    <input type="button" value="增加" class="btn_add" onclick="location.href='admin_add.jsp';" />
+                    <input type="button" value="增加" class="btn_add" onclick="location.href='../admin/adminAdd.do';" />
                 </div>
                 <!--删除和密码重置的操作提示-->
                 <div id="operate_result_info" class="operate_fail">
@@ -113,7 +113,7 @@
                                 </div>
                             </td>
                             <td class="td_modi">
-                                <input type="button" value="修改" class="btn_modify" onclick="location.href='admin_modi.jsp';" />
+                                <input type="button" value="修改" class="btn_modify" onclick="location.href='../admin/adminModi.do?adminCode=${admin.admin_code}';" />
                                 <input type="button" value="删除" class="btn_delete" onclick="deleteAdmin();" />
                             </td>
                         </tr>
@@ -144,10 +144,6 @@
             <span>版权所有(C)云科技有限公司 </span>
         </div>
     <script type="text/javascript">
-        $(function () {
-
-        })
-
 
         function searchPage(e) {
             $("#currentPage").val(e);
@@ -155,6 +151,9 @@
             console.log(d)
             $("form").submit();
         }
+
+
+
 
         //显示角色详细信息
         function showDetail(flag, a) {
