@@ -29,6 +29,11 @@ public class AdminController {
     @Resource
     private AdminService adminServiceImpl;
 
+    @RequestMapping("adminMain.do")
+    public String mian(){
+        return "main";
+    }
+
     @RequestMapping("/adminList.do")
     public String admin1(Model model){
         Map map = adminServiceImpl.adminList();

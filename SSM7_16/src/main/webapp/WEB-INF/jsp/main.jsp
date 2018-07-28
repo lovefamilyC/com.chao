@@ -10,7 +10,7 @@
         <!--导航区域开始-->
         <div id="index_navi">
             <ul id="menu">
-                <li><a href="<%=request.getContextPath()%>/login/login.do" class="index_off"></a></li>
+                <li><a href="<%=request.getContextPath()%>/admin/adminMain.do" class="index_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/role/roleList.do" class="role_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/admin/adminList.do" class="admin_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/fee/feeList.do" class="fee_off"></a></li>
