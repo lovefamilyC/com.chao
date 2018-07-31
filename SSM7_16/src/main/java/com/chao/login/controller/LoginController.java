@@ -2,6 +2,9 @@ package com.chao.login.controller;
 
 import com.chao.login.bean.LoginBean;
 import com.chao.login.service.LoginService;
+import com.chao.login.service.impl.LoginServiceImpl;
+import com.chao.proxy.MyInvocationHandler;
+import com.chao.utils.AppMD5Util;
 import com.chao.utils.VerifyCodeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +30,6 @@ public class LoginController {
 
     @Resource
     private LoginService loginServiceImpl;
-
     @RequestMapping(value = "/verifyCode.do",method = RequestMethod.GET)
     public void getVerifyCode(HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Pragma", "No-cache");
@@ -53,18 +55,17 @@ public class LoginController {
     @RequestMapping(value = "/login.do",method = RequestMethod.POST)
     @ResponseBody
     public String login(LoginBean loginBean,HttpServletRequest request){
-        System.out.println(loginBean);
-
         String verCode = (String) request.getSession().getAttribute("verCode");
-        if (!verCode.equalsIgnoreCase(loginBean.getVerCode())) return "verCode";
+        String code = loginBean.getVerCode().toLowerCase();
+        String passowrd = AppMD5Util.MD5(loginBean.getPassword()+"MD5");
+        loginBean.setPassword(passowrd);
+        if (verCode==null||!verCode.equals(code)) return "verCode";
         boolean flag = loginServiceImpl.login(loginBean);
         if (flag){
             HttpSession session = request.getSession();
-            session.setAttribute("admin",loginBean.getAdminCode());
+            session.setAttribute("loginAdminCode",loginBean.getAdminCode());
             return "ture";
         }
         return "admin";
     }
-
-
 }

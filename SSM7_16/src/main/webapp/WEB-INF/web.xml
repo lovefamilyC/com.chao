@@ -17,6 +17,34 @@
       <param-value>true</param-value>
     </init-param>
   </filter>
+
+  <!--拦截器-->
+  <filter>
+    <filter-name>AllFilter</filter-name>
+    <filter-class>com.chao.filter.AllFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AllFilter</filter-name>
+    <url-pattern>/account/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AllFilter</filter-name>
+    <url-pattern>/fee/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AllFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AllFilter</filter-name>
+    <url-pattern>/role/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>AllFilter</filter-name>
+    <url-pattern>/service/*</url-pattern>
+  </filter-mapping>
+  
+  
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>

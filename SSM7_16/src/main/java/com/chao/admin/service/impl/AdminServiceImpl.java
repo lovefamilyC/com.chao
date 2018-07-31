@@ -6,6 +6,7 @@ import com.chao.admin.dao.AdminMapper;
 import com.chao.admin.service.AdminService;
 import com.chao.role.bean.Module;
 import com.chao.role.bean.Role;
+import com.chao.utils.AppMD5Util;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -75,6 +76,8 @@ public class AdminServiceImpl implements AdminService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd HH:mm");
         String enrolldate = dateFormat.format(date);
         adminBean.setEnrolldate(enrolldate);
+        String password = AppMD5Util.MD5(adminBean.getPassword()+"MD5");
+        adminBean.setPassword(password);
         int num = adminMapper.addAdmin(adminBean);
         adminBean = adminMapper.findAdminByCode(adminBean.getAdmin_code());
         for (String roleid : roleidList) {

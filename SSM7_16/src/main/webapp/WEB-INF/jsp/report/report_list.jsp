@@ -38,7 +38,7 @@
                 <li><a href="../fee/fee_list.html" class="fee_off"></a></li>
                 <li><a href="../account/account_list.html" class="account_off"></a></li>
                 <li><a href="../service/service_list.jsp" class="service_off"></a></li>
-                <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
+                <li><a href="../bill/bill_list.jsp" class="bill_off"></a></li>
                 <li><a href="report_list.jsp" class="report_on"></a></li>
                 <li><a href="../user/user_info.html" class="information_off"></a></li>
                 <li><a href="../user/user_modi_pwd.html" class="password_off"></a></li>

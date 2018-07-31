@@ -40,7 +40,7 @@
                 <li><a href="<%=request.getContextPath()%>/fee/feeList.do" class="fee_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/account/accountList.do" class="account_off"></a></li>
                 <li><a href="<%=request.getContextPath()%>/service/serviceList.do" class="service_off"></a></li>
-                <li><a href="../bill/bill_list.html" class="bill_off"></a></li>
+                <li><a href="../bill/bill_list.jsp" class="bill_off"></a></li>
                 <li><a href="../report/report_list.jsp" class="report_off"></a></li>
                 <li><a href="../user/user_info.html" class="information_off"></a></li>
                 <li><a href="../user/user_modi_pwd.html" class="password_off"></a></li>
