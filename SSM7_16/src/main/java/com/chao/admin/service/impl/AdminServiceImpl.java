@@ -118,9 +118,6 @@ public class AdminServiceImpl implements AdminService {
     public String modiAdminAndRole(AdminBean adminBean) {
         adminBean.setRePassword(adminBean.getPassword());
         List<String> roleidList = adminBean.getRoleidList();
-        for (String s : roleidList) {
-            System.out.println(s);
-        }
         if (judge(adminBean, roleidList)) {
             return "请将必填项填写完成";
         }
@@ -190,8 +187,6 @@ public class AdminServiceImpl implements AdminService {
     private boolean judge(AdminBean adminBean, List<String> roleidList) {
         if ("".equals(adminBean.getAdmin_id()) || adminBean.getAdmin_id() == null) adminBean.setAdmin_id("789");
         if ("".equals(adminBean.getEnrolldate()) || adminBean.getEnrolldate() == null) adminBean.setEnrolldate("789");
-        System.out.println(adminBean);
-
 
         List<Role> roleList = adminMapper.findAllRole();
         adminBean.setRoleList(roleList);
@@ -209,11 +204,9 @@ public class AdminServiceImpl implements AdminService {
                 e.printStackTrace();
             }
         }
-        System.out.println("1"+flag);
         if (roleidList == null || roleidList.size() < 1) {
             flag = true;
         }
-        System.out.println("===="+flag);
         return flag;
     }
 

@@ -35,7 +35,7 @@
             <td class="login_button" colspan="2">
                 <a href="#" id="login"><img src="images/login_btn.png"/></a>
             </td>
-            <td><span class="required" id="resultShow">用户名或密码错误，请重试</span></td>
+            <td><span class="required" id="resultShow"></span></td>
             <a id="loginAdmin" href="*"></a>
         </tr>
     </table>
@@ -75,11 +75,11 @@
 
     function dispose(e) {
         if (e == 'admin'){
-            $("#save_result_info").html("用户名或密码错误，请重试")
+            $("#resultShow").html("用户名或密码错误，请重试")
             showResult();
         }
         if (e == 'verCode'){
-            $("#save_result_info").html("验证码错误")
+            $("#resultShow").html("验证码错误")
             showResult();
         }
         if (e =="ture"){

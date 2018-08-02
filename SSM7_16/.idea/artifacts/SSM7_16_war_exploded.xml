@@ -36,6 +36,9 @@
           <element id="library" level="project" name="Maven: org.apache.taglibs:taglibs-standard-impl:1.2.5" />
           <element id="library" level="project" name="Maven: com.github.pagehelper:pagehelper:5.1.2" />
           <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:1.0" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.9" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjtools:1.8.9" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
         </element>
       </element>
       <element id="directory" name="META-INF">

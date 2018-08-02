@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!--注解驱动-->
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="true">
@@ -13,6 +14,35 @@
     </mvc:annotation-driven>
     <!--注解扫描-->
     <context:component-scan base-package="com.chao"/>
+    <!-- 开启AOP注解扫描 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!-- 注册拦截器 -->
+    <mvc:interceptors>
+        <!-- 登录检查拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login/*"/>
+            <!--<mvc:exclude-mapping path="/login/verifyCode.do"/>-->
+            <!--<mvc:exclude-mapping path="/login/createImage.do"/>-->
+            <bean class="com.chao.interceptor.MyEnterInterceptor"/>
+        </mvc:interceptor>
+
+        <!-- 判断当前模块拦截器 -->
+        <!--<mvc:interceptor>-->
+            <!--<mvc:mapping path="/**"/>-->
+            <!--<bean class="com.chao.interceptor.MyEnterInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+        <!-- 权限检查拦截器
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/login/*"/>
+            <bean class="com.lanou.interceptor.CheckModuleInterceptor"/>
+        </mvc:interceptor>-->
+    </mvc:interceptors>
+
+
+
+
     <!--前缀后缀拼接bean-->
     <!--配置资源地址 /WEB-INF/xx.jsp-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="jspViewResolver">
